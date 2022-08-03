@@ -8,41 +8,76 @@ console.log(urlProduct)
 let idProduct = urlProduct.searchParams.get("id");
 console.log(idProduct)
 
+//Récupération des données de l'API avec fetch
+fetch("http://localhost:3000/api/products/" +idProduct)
+    //Modification du resultat en .json
+        .then(products => products.json())
+        .then(
+            function(result){
+            showProducts(result)
+            showColors(result.colors)
+            }
+)
 
-//Récupération des données de l'API avec constante et fetch en fonction de l'id
-const getProducts = async function () {
-    let response = await fetch("http://localhost:3000/api/products/" +idProduct)
-    let data = await response.json()
-    return data;
+//Création de la fonction showProducts pour implémenter le HTML avec les infos du produit
+function showProducts(products){
+    console.log(products)
+    let html=` 
+        <article>
+            <div class="item__img">
+                <img src=${products.imageUrl} alt=${products.altTxt}>
+            </div>
+            <div class="item__content">
+
+                <div class="item__content__titlePrice">
+                <h1 id="title">${products.name}</h1>
+                <p>Prix : <span id="price">${products.price}</span>€</p>
+                </div>
+
+                <div class="item__content__description">
+                <p class="item__content__description__title">Description :</p>
+                <p id="description">${products.description}</p>
+                </div>
+
+                <div class="item__content__settings">
+                <div class="item__content__settings__color">
+                    <label for="color-select">Choisir une couleur :</label>
+                    <select name="color-select" id="colors">
+                        <option value="">--SVP, choisissez une couleur --</option>
+                    </select>
+                </div>
+
+                <div class="item__content__settings__quantity">
+                    <label for="itemQuantity">Nombre d'article(s) (1-100) :</label>
+                    <input type="number" name="itemQuantity" min="1" max="100" value="0" id="quantity">
+                </div>
+                </div>
+
+                <div class="item__content__addButton">
+                <button id="addToCart">Ajouter au panier</button>
+                </div>
+
+            </div>
+        </article>
+    `
+    //Affichage dans le HTML
+    document.querySelector(".item").innerHTML=html
 }
 
-//Répartition de chaque attribut du produit de l'API dans le DOM
-let products = getProducts().then(data => {
-      console.log(data)
-
-    //Insertion de l'élément "img"
-    let productImg = document.createElement("img");
-    //querySelector= retourne élement item__img
-    //appendChild = ajoute un noeud à la fin de la liste des enfants d'un noeud
-    document.querySelector(".item__img").appendChild(productImg); 
-    //va chercher l'image et son "alt" correspondant à l'id
-    productImg.src = data.imageUrl
-    productImg.alt = data.altTxt
-
-    //Insertion de l'élément name dans un "h1" avec l'id "title"
-    document.getElementById("title").innerHTML = data.name
-
-    //Insertion de l'élément prix dans un "span" avec l'id "price"
-    document.getElementById("price").innerHTML = data.price
-
-    //Insertion de l'élément description dans un "p" avec l'id "description"
-    document.getElementById("description").innerHTML = data.description
-
-    //Insertion de l'élément couleur dans un "option"
-    console.log(data.colors)
-    for(let getColor of data.colors){
-        console.log('color', getColor)
-        let productColors = document.createElement("option");
-        document.querySelector("#colors").appendChild(productColors)
-        productColors.innerHTML = getColor;
-    }})
+//Création de la fonction showColors pour implémenter le HTML avec le choix des couleurs
+function showColors(colors){
+    console.log(colors)
+    //Déclaration de la variable html pour avoir la proposition "SVP..."
+    let htmlColor=`
+        <option value="">--SVP, choisissez une couleur --</option>
+    `
+    //Boucle pour chaque couleurs
+    for(let color of colors){
+    //Utilisation de Ecma script ES6 pour intégration des données dans le HTML
+    htmlColor+=` 
+        <option value=>${color}</option>
+    `
+    }
+    //Affichage dans le HTML de la partie couleur
+    document.querySelector("#colors").innerHTML=htmlColor
+}
