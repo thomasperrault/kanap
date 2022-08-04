@@ -61,7 +61,54 @@ function showProducts(products){
         </article>
     `
     //Affichage dans le HTML
-    document.querySelector(".item").innerHTML=html
+    document.querySelector(".item").innerHTML=html;
+
+    // A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR 
+    // A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR 
+    // A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR 
+    // A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR A REVOIR 
+
+    //Prise en compte du click sur le bouton 'ajouter au panier' une fois toute les données intégrées
+    const btnBasket = document.getElementById("addToCart");
+    btnBasket.addEventListener("click", addToCart);
+
+    function addToCart(){
+
+        //Récupération du choix des couleurs
+        let colorList;
+        let colorChoice;
+        colorList = document.getElementById("colors");
+        colorChoice = colorList.options[colorList.selectedIndex].text;
+        console.log("colorChoice", colorChoice)
+    
+        //Récupération du choix de la quantité   
+        const quantityPicked = document.querySelector("#quantity");
+        let quantityChoice = quantityPicked.value;
+        console.log("quantityChoice", quantityChoice)
+    
+        //Récupération des données pour localstorage   
+        let infoProduct = {
+            InfoIdProduct: idProduct,
+            InfoNameProduct: products.name,
+            InfoColorProduct: colorChoice,
+            InfoQuantityProduct: Number(quantityChoice),
+            InfoPriceProduct: products.price,
+            InfoImgProduct: products.imageUrl,
+            InfoAltImgProduct: products.altTxt,
+            InfoDescriptionProduct: products.description,
+        }
+        console.log("infoProduct", infoProduct)
+    
+        //Condition pour validation panier (présence couleur et quantité comprise entre 1 et 100)
+        if (quantityChoice <= 0 || quantityChoice > 100){
+            alert("Veuillez entrer une valeur comprise entre 1 et 100")
+        } else if(colorChoice == "--SVP, choisissez une couleur --"){
+            alert("Veuillez choisir une coleur")
+        } else{     
+            alert("Produit ajouté au panier avec succès");
+        }
+    }
+    
 }
 
 //Création de la fonction showColors pour implémenter le HTML avec le choix des couleurs
@@ -81,3 +128,4 @@ function showColors(colors){
     //Affichage dans le HTML de la partie couleur
     document.querySelector("#colors").innerHTML=htmlColor
 }
+
