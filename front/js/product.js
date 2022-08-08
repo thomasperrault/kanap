@@ -87,7 +87,7 @@ function showProducts(products){
         console.log("quantityChoice", quantityChoice)
     
         //Récupération des données pour localstorage   
-        let infoProduct = {
+        let infoProductChoice = {
             InfoIdProduct: idProduct,
             InfoNameProduct: products.name,
             InfoColorProduct: colorChoice,
@@ -97,19 +97,59 @@ function showProducts(products){
             InfoAltImgProduct: products.altTxt,
             InfoDescriptionProduct: products.description,
         }
-        console.log("infoProduct", infoProduct)
-    
-        //Condition pour validation panier (présence couleur et quantité comprise entre 1 et 100)
-        if (quantityChoice <= 0 || quantityChoice > 100){
+        console.log("infoProductChoice", infoProductChoice)
+
+
+        //Popup de confirmation d'ajout au panier
+        //Condition pour validation panier et intégration au local storage (présence couleur et quantité comprise entre 1 et 100)
+        if (quantityChoice <= 0 || quantityChoice > 100){ //Erreur > On s'arrête
             alert("Veuillez entrer une valeur comprise entre 1 et 100")
-        } else if(colorChoice == "--SVP, choisissez une couleur --"){
-            alert("Veuillez choisir une coleur")
-        } else{     
-            alert("Produit ajouté au panier avec succès");
+        } 
+        else if(colorChoice == "--SVP, choisissez une couleur --"){ //Erreur > On s'arrête
+            alert("Veuillez choisir une couleur")
+        } 
+        else{ // Ok on continue avec message et intégration au local storage
+                //window.confirm affiche une fenêtre. Ok=True=If=Panier Annuler=False=Else=Accueil
+                if(window.confirm(`Le canapé ${infoProductChoice.InfoNameProduct} ${infoProductChoice.InfoColorProduct} (Quantité : ${infoProductChoice.InfoQuantityProduct})
+a bien été ajouté à votre panier.
+Pour consulter le panier : OK
+Pour revenir à l'accueil : ANNULER`)){
+                    window.location.href = "./cart.html";
+                }
+                else{
+                    window.location.href = "./index.html"
+                }
+
+            //Local Storage : stock les valeurs du panier
+            //Déclaration de la variable productInLocalStorage
+            //JSON.parse converti les données au format JSON qui sont dans le localstorage en objet JS
+            let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
+            console.log(productInLocalStorage);
+
+            //S'il y a déjà des produits enregistré dans le LS
+            if(productInLocalStorage){
+                productInLocalStorage.push(infoProductChoice);
+                localStorage.setItem("product",JSON.stringify(productInLocalStorage));
+                console.log(productInLocalStorage);
+                popupConfirmation();
+            }
+            //S'il n'y a pas de produits enregistré dans le LS
+            else{
+                productInLocalStorage = [];
+                productInLocalStorage.push(infoProductChoice);
+                localStorage.setItem("product",JSON.stringify(productInLocalStorage));
+                console.log(productInLocalStorage);
+                popupConfirmation();
+            }
         }
     }
-    
 }
+
+//EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR 
+//EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR 
+//EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR 
+//EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR 
+//EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR 
 
 //Création de la fonction showColors pour implémenter le HTML avec le choix des couleurs
 function showColors(colors){
