@@ -15,7 +15,7 @@ fetch("http://localhost:3000/api/products/" +idProduct)
         .then(
             function(result){
             showProducts(result)
-            showColors(result.colors)
+            //showColors(result.colors)
             }
 )
 
@@ -43,8 +43,13 @@ function showProducts(products){
                 <div class="item__content__settings__color">
                     <label for="color-select">Choisir une couleur :</label>
                     <select name="color-select" id="colors">
-                        <option value="">--SVP, choisissez une couleur --</option>
-                    </select>
+                    <option value="">--SVP, choisissez une couleur --</option>
+                    `;
+                    //Boucle pour chaque couleurs
+                for(let color of products.colors){
+                    html +=`<option value=>${color}</option>`;
+                }
+        html +=`</select>
                 </div>
 
                 <div class="item__content__settings__quantity">
@@ -122,6 +127,7 @@ function showProducts(products){
                 if(resultFind){
                     //Déclaration d'une nouvelle quantité
                     let newQuantity = 
+                    //parseInt analyse une chaine de caractère fournie en argument et renvoie un entier
                     parseInt(infoProductChoice.infoQuantityProduct) + parseInt(resultFind.infoQuantityProduct);
                     resultFind.infoQuantityProduct = newQuantity;
                     //Modification de la quantité dans le LS avec setItem 
@@ -131,6 +137,7 @@ function showProducts(products){
                 //S'il n'y a pas de doublon
                 else{
                     //Ajout du nouveau produit au LS (Panier)
+                    //push ajoute un ou pls éléments à la fin d'un tableau
                     productInLocalStorage.push(infoProductChoice);
                     localStorage.setItem("product",JSON.stringify(productInLocalStorage));
                     console.log("productInLocalStorage", productInLocalStorage);
@@ -139,6 +146,7 @@ function showProducts(products){
             }
             //S'il n'y a pas de produits enregistré dans le LS
             else{
+                //Initialisation du local storage sous forme de tableau
                 productInLocalStorage = [];
                 productInLocalStorage.push(infoProductChoice);
                 localStorage.setItem("product",JSON.stringify(productInLocalStorage));
@@ -146,28 +154,4 @@ function showProducts(products){
             }
         }
     }
-}
-
-//EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR 
-//EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR 
-//EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR 
-//EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR 
-//EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR EMPLACEMENT A REVOIR 
-
-//Création de la fonction showColors pour implémenter le HTML avec le choix des couleurs
-function showColors(colors){
-    console.log("colors", colors)
-    //Déclaration de la variable html pour avoir la proposition "SVP..."
-    let htmlColor=`
-        <option value="">--SVP, choisissez une couleur --</option>
-    `
-    //Boucle pour chaque couleurs
-    for(let color of colors){
-    //Utilisation de Ecma script ES6 pour intégration des données dans le HTML
-    htmlColor+=` 
-        <option value=>${color}</option>
-    `
-    }
-    //Affichage dans le HTML de la partie couleur
-    document.querySelector("#colors").innerHTML=htmlColor
 }
