@@ -1,9 +1,11 @@
+/*LOCAL STORAGE*/
 //Récupération des données du local storage
 let cart = window.localStorage.getItem("product");
 //Modification du format en JSON
 let cartArray= JSON.parse(cart);
 console.log(cartArray);
 
+/*CART*/
 //Déclaration cartItems issue du HTML
 let cartItems = document.getElementById('cart__items');
 
@@ -72,4 +74,32 @@ function getCart(){
 //Appel de la fonction getCard
 getCart();
 
+/*TOTAL QUANTITY AND PRICE*/
+function getTotal(){
+    //Quantity Total
+    let quantityProduct = document.getElementsByClassName("itemQuantity");
+    //Nombre de référence d'articles différent
+    let quantityProductLenght = quantityProduct.length;
+    quantityProductTotal =0;
+    //Détermination du nombre d'article pour intégration au total 
+    for (let i = 0; i< quantityProductLenght; ++i){
+        //valueAsNumber = nbr d'élément interprété comme un nombre
+        quantityProductTotal += quantityProduct[i].valueAsNumber;
+    }
+    //Insertion du nombre de produit dans le HTML
+    let quantityCart = document.getElementById("totalQuantity");
+    quantityCart.innerHTML = quantityProductTotal;
+    console.log(quantityProductTotal);
+
+    // Price Total
+    totalPrice = 0;
+    for (var i = 0; i < quantityProductLenght; ++i) {
+        totalPrice += (quantityProduct[i].valueAsNumber * cartArray[i].infoPriceProduct);
+    }
+    //Insertion du prix total dans le HTML
+    let productTotalPrice = document.getElementById('totalPrice');
+    productTotalPrice.innerHTML = totalPrice;
+    console.log(totalPrice);
+}
+getTotal();
 
