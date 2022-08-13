@@ -106,9 +106,8 @@ getTotal();
 
 // Modification d'une quantité de produit
 function modifQuantity() {
-    //Récupération des données dans le input
+    //Déclaration variable sur le input
     let quantityInputs = document.querySelectorAll(".itemQuantity");
-    console.log(quantityInputs)
 
     for (let i=0; i < quantityInputs.length; i++){
         //Evenement de modification sur le input
@@ -132,3 +131,34 @@ function modifQuantity() {
     }
 }
 modifQuantity();
+
+//Suppression d'un article du panier
+function deleteProduct(){
+    //Déclaration variable sur le bouton supprimer
+    let btnSupprimer = document.querySelectorAll(".deleteItem");
+
+    for (let i=0; i < btnSupprimer.length; i++){
+        //Evenement de suppression sur le bouton
+        btnSupprimer[i].addEventListener("click" , function(){
+
+            //Récupération de la quantité dans le LS
+            let quantityLS = productInLocalStorage[i].infoQuantityProduct;
+            console.log(quantityLS)
+
+            //Modifier la quantité du LS avec la quantité indiquée dans le input
+            productInLocalStorage[i].infoQuantityProduct = 0;
+            console.log(productInLocalStorage)
+
+            //Suppression du produit = 0 du LS
+            productInLocalStorage.splice(i, 1);
+
+            //Ecraser le LS avec les nouvelles données
+            localStorage.setItem("product", JSON.stringify(productInLocalStorage));
+
+            //Rafraichir la page après chaque clic sur l'input
+            alert("Ce produit a été supprimé de votre panier")
+            location.reload();
+        })
+    }
+}
+deleteProduct();
