@@ -5,8 +5,7 @@ let cartItems = document.getElementById('cart__items');
 let cartContent;
 
 async function loadPage() {
-    /* Création du cart */
-    
+    /* Création du cart */    
     cartContent = await initCart();
    
     /* 2 AFFICHAGE DU PANIER ET DES TOTAUX */
@@ -19,11 +18,22 @@ async function loadPage() {
     //Ecoute du listener de la modifcation de quantité
     addListernerQuantity(cartContent);
     //Ecoute du listener de la suppression d'un élément
-    addListenerDelete(cartContent, cartItems)
+    addListenerDelete(cartContent, cartItems);
 
     /* 4 FORMULAIRE VALIDATION */
+    //Ecoute des inputs formulaire 
+    listenerFirstName(); //Prénom
+    listenerLastName(); //Nom
+    listenerAddress(); //Adresse
+    listenerCity(); //Ville
+    listenerEmail(); //Email
     //Ecoute du bouton commander
-    //Ecoute des inputs du formulaire 
+    listenerOrder(cartContent);
+
+
+
+
+
 }
 
 loadPage();
