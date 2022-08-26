@@ -1,10 +1,20 @@
 //Création du cart avec le prix
 let cartElements = [];
 async function initCart() {
-    await Promise.all(productInLocalStorage.map(async (product) => {
-        cartElements.push(await getProduct(product));
-    }));
-    return cartElements;
+    if (productInLocalStorage == null || productInLocalStorage == 0){
+        let html= ` 
+        <div class="cartAndFormContainer" id="cartAndFormContainer">
+            <h1>Votre panier est vide</h1>
+        </div>
+        `;
+        document.querySelector("#cartAndFormContainer").innerHTML=html  
+    }
+    else{
+        await Promise.all(productInLocalStorage.map(async (product) => {
+            cartElements.push(await getProduct(product));
+        }));
+        return cartElements;
+    }
 }
 
 //Récupération des données du LS + Prix sur l'API 
@@ -69,7 +79,6 @@ function showCart(cartContent) {
             `;
             cartItems.insertAdjacentHTML("beforeend", html);
         }
-
     }
 }
 
