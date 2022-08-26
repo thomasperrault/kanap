@@ -157,7 +157,6 @@ function addListenerDelete(cartContent) {
         //Evenement de suppression sur le bouton
         btnSupprimer[i].addEventListener("click" , function(){
             deleteProduct(cartContent[i], cartContent)
-            console.log(cartContent)
         })
     }
 }

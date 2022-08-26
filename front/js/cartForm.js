@@ -127,7 +127,6 @@ function cartOrder(cartContent){
         contact,
         products,
     }
-    console.log(order);
  
     //Post sur API 
     fetch("http://localhost:3000/api/products/order", {
@@ -144,6 +143,5 @@ function cartOrder(cartContent){
         localStorage.clear();
     })
     .catch((err) => {
-        console.error(err);
     }) 
 }

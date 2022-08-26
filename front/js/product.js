@@ -1,12 +1,9 @@
 //window.location.href renvoi un string qui contient l'url de la page où je me trouve
 let str = window.location.href;
-console.log("str", str)
 //new URL renvoi un objet représnetant l'URL définie
 let urlProduct = new URL(str);
-console.log("urlProduct", urlProduct)
 //searchParams.get("id") renvoi le paramètre id de mon URL
 let idProduct = urlProduct.searchParams.get("id");
-console.log("idProduct", idProduct)
 
 //Récupération des données de l'API avec fetch
 fetch("http://localhost:3000/api/products/" +idProduct)
@@ -21,7 +18,6 @@ fetch("http://localhost:3000/api/products/" +idProduct)
 
 //Création de la fonction showProducts pour implémenter le HTML avec les infos du produit
 function showProducts(products){
-    console.log("products", products)
     let html=` 
         <article>
             <div class="item__img">
@@ -79,12 +75,10 @@ function showProducts(products){
         let colorChoice;
         colorList = document.getElementById("colors");
         colorChoice = colorList.options[colorList.selectedIndex].text;
-        console.log("colorChoice", colorChoice)
     
         //Récupération du choix de la quantité   
         const quantityPicked = document.querySelector("#quantity");
         let quantityChoice = quantityPicked.value;
-        console.log("quantityChoice", quantityChoice)
     
         //Récupération des données pour localstorage   
         let infoProductChoice = {
@@ -97,7 +91,6 @@ function showProducts(products){
             infoAltImgProduct: products.altTxt,
             infoDescriptionProduct: products.description,
         }
-        console.log("infoProductChoice", infoProductChoice)
 
 
         //Popup de confirmation d'ajout au panier
@@ -116,7 +109,6 @@ function showProducts(products){
             //Déclaration de la variable productInLocalStorage
             //JSON.parse converti les données au format JSON qui sont dans le localstorage en objet JS
             let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
-            console.log("productInLocalStorage", productInLocalStorage);
 
             //S'il y a déjà des produits enregistré dans le LS
             if(productInLocalStorage){
@@ -132,7 +124,6 @@ function showProducts(products){
                     resultFind.infoQuantityProduct = newQuantity;
                     //Modification de la quantité dans le LS avec setItem 
                     localStorage.setItem("product", JSON.stringify(productInLocalStorage));
-                    console.table(productInLocalStorage);
                 }
                 //S'il n'y a pas de doublon
                 else{
@@ -140,8 +131,6 @@ function showProducts(products){
                     //push ajoute un ou pls éléments à la fin d'un tableau
                     productInLocalStorage.push(infoProductChoice);
                     localStorage.setItem("product",JSON.stringify(productInLocalStorage));
-                    console.log("productInLocalStorage", productInLocalStorage);
-                    console.log("infoIdProduct", infoProductChoice.infoIdProduct)
                 }
             }
             //S'il n'y a pas de produits enregistré dans le LS
@@ -150,7 +139,6 @@ function showProducts(products){
                 productInLocalStorage = [];
                 productInLocalStorage.push(infoProductChoice);
                 localStorage.setItem("product",JSON.stringify(productInLocalStorage));
-                console.log(productInLocalStorage);
             }
         }
     }

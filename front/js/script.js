@@ -9,7 +9,6 @@ fetch("http://localhost:3000/api/products")
   )
 
 function showProducts(products){
-  console.log(products)
   //Déclaration de la variable html vide pour la remplir ensuite dans la boucle
   let html="";
   for(let product of products){
