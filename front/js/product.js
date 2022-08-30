@@ -86,7 +86,6 @@ function showProducts(products){
             infoNameProduct: products.name,
             infoColorProduct: colorChoice,
             infoQuantityProduct: Number(quantityChoice),
-            infoPriceProduct: products.price,
             infoImgProduct: products.imageUrl,
             infoAltImgProduct: products.altTxt,
             infoDescriptionProduct: products.description,
